@@ -11,10 +11,11 @@ import (
 	"github.com/prometheus/common/model"
 	"github.com/prometheus/prometheus/prompb"
 	"go.uber.org/zap"
-	elastic "gopkg.in/olivere/elastic.v5"
+	elastic "gopkg.in/olivere/elastic.v6"
 )
 
 const sampleType = "sample"
+const samplePipeline = "map_label_value"
 
 type Sample struct {
 	Labels    model.Metric `json:"label"`
@@ -206,6 +207,7 @@ func (a *Adapter) Write(req []*prompb.TimeSeries) error {
 			}
 			r := elastic.
 				NewBulkIndexRequest().
+				Pipeline(samplePipeline).
 				Index(activeIndexAlias).
 				Type(sampleType).
 				Doc(sample)

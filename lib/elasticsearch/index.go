@@ -20,10 +20,7 @@ const activeIndexTemplate = `{
 		"search-prom-metrics": {}
 	},
 	"mappings":{
-		"_default_": {
-			"_all": {
-				"enabled": false
-			},
+		"_doc": {
 			"properties": {
 				"timestamp": {
 					"type": "date",
